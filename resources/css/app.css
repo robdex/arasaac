@@ -68,10 +68,11 @@ button:hover {
 }
 
 .parola-testo {
-    font-size: 1rem;
+    font-size: 1.2rem; /* Aumentato da 1rem a 1.2rem */
     color: #4a86e8;
     margin-bottom: 5px;
     text-align: center;
+    font-weight: bold; /* Aggiunto per maggiore enfasi */
 }
 
 #risultatoTraduzione img {
