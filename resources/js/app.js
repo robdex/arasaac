@@ -6,45 +6,75 @@ document.addEventListener('DOMContentLoaded', function() {
     const risultatoTraduzione = document.getElementById('risultatoTraduzione');
     const generaCasuale = document.getElementById('generaCasuale');
 
-    // Aggiungi stili per la textarea e il pulsante di cancellazione
+    // Aggiungi Font Awesome
+    const fontAwesome = document.createElement('link');
+    fontAwesome.rel = 'stylesheet';
+    fontAwesome.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
+    document.head.appendChild(fontAwesome);
+
+    // Aggiungi stili per la textarea, il pulsante di cancellazione e le icone
     const style = document.createElement('style');
     style.textContent = `
-        #testoInput {
-            height: 150px; /* Aumentato del 50% da 100px */
-            font-size: 18px; /* Aumenta la dimensione del carattere */
-            padding-right: 30px; /* Spazio per il pulsante di cancellazione */
-        }
-        .input-wrapper {
+        .form-container {
             position: relative;
+        }
+        #testoInput {
+            height: 150px;
+            font-size: 18px;
+            width: 100%;
+            padding-right: 40px;
         }
         .clear-button {
             position: absolute;
-            right: 10px;
             top: 10px;
-            background: none;
-            border: none;
-            font-size: 20px;
+            right: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 5px 10px;
+            font-size: 16px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .clear-button:hover {
+            background-color: #e0e0e0;
+        }
+        .clear-button:focus {
+            outline: 2px solid #4a90e2;
+        }
+        .icon {
+            margin-left: 5px;
         }
     `;
     document.head.appendChild(style);
 
-    // Avvolgi la textarea in un div e aggiungi il pulsante di cancellazione
-    const wrapper = document.createElement('div');
-    wrapper.className = 'input-wrapper';
-    testoInput.parentNode.insertBefore(wrapper, testoInput);
-    wrapper.appendChild(testoInput);
-
+    // Aggiungi il pulsante di cancellazione
     const clearButton = document.createElement('button');
-    clearButton.innerHTML = '&times;';
+    clearButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
     clearButton.className = 'clear-button';
     clearButton.type = 'button';
-    wrapper.appendChild(clearButton);
+    clearButton.setAttribute('aria-label', 'Cancella testo');
+    
+    const formContainer = document.createElement('div');
+    formContainer.className = 'form-container';
+    testoInput.parentNode.insertBefore(formContainer, testoInput);
+    formContainer.appendChild(testoInput);
+    formContainer.appendChild(clearButton);
 
     clearButton.addEventListener('click', function() {
         testoInput.value = '';
         testoInput.focus();
     });
+
+    // Aggiungi icone agli altri pulsanti
+    const submitButton = formTraduzione.querySelector('button[type="submit"]');
+    submitButton.innerHTML += '<i class="fas fa-magic icon"></i>';
+
+    if (generaCasuale) {
+        generaCasuale.innerHTML += '<i class="fas fa-dice icon"></i>';
+    }
 
     if (formTraduzione) {
         formTraduzione.addEventListener('submit', async function(e) {
