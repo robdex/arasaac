@@ -12,44 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
     fontAwesome.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
     document.head.appendChild(fontAwesome);
 
-    // Aggiungi stili per la textarea, il pulsante di cancellazione e le icone
-    const style = document.createElement('style');
-    style.textContent = `
-        .form-container {
-            position: relative;
-        }
-        #testoInput {
-            height: 150px;
-            font-size: 18px;
-            width: 100%;
-            padding-right: 40px;
-        }
-        .clear-button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: #f0f0f0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 5px 10px;
-            font-size: 16px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .clear-button:hover {
-            background-color: #e0e0e0;
-        }
-        .clear-button:focus {
-            outline: 2px solid #4a90e2;
-        }
-        .icon {
-            margin-left: 5px;
-        }
-    `;
-    document.head.appendChild(style);
-
     // Aggiungi il pulsante di cancellazione
     const clearButton = document.createElement('button');
     clearButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
