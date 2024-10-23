@@ -1,3 +1,101 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: #f0f8ff;
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    color: #4a86e8;
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    font-size: 1.2rem;
+    color: #4a86e8;
+    display: block;
+    margin-bottom: 5px;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #4a86e8;
+    border-radius: 10px;
+    font-size: 1rem;
+}
+
+button {
+    background-color: #4a86e8;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #3a76d8;
+}
+
+#risultatoTraduzione {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#risultatoTraduzione img {
+    margin: 10px;
+    border: 3px solid #4a86e8;
+    border-radius: 10px;
+    transition: transform 0.3s;
+}
+
+#risultatoTraduzione img:hover {
+    transform: scale(1.1);
+}
+
+.image-container {
+    position: relative;
+    margin: 10px;
+}
+
+.image-container img {
+    border: 3px solid #4a86e8;
+    border-radius: 10px;
+    transition: transform 0.3s;
+}
+
+.image-container img:hover {
+    transform: scale(1.1);
+}
+
+.image-text {
+    position: absolute;
+    bottom: 10px; /* Posizione verticale del testo */
+    left: 50%;
+    transform: translateX(-50%);
+    color: white; /* Colore del testo */
+    background-color: rgba(0, 0, 0, 0.5); /* Sfondo semi-trasparente */
+    padding: 5px;
+    border-radius: 5px;
+    text-align: center;
+}
