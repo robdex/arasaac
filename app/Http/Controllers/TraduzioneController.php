@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\Process\Process;
 
 class TraduzioneController extends Controller
@@ -35,9 +36,10 @@ class TraduzioneController extends Controller
                 }
             }
             if (!empty($risultato)) {
+                $immagineUrl = $this->getImmagineUrl($risultato[0]['_id']);
                 $risultati[] = [
                     'parola' => $parola,
-                    'immagine' => "https://static.arasaac.org/pictograms/" . $risultato[0]['_id'] . "/" . $risultato[0]['_id'] . "_300.png"
+                    'immagine' => $immagineUrl
                 ];
             } else {
                 $risultati[] = [
@@ -72,6 +74,24 @@ print(doc[0].lemma_)
         }
 
         return trim($process->getOutput());
+    }
+
+    protected function getImmagineUrl($id)
+    {
+        $localPath = "images/arasaac/{$id}_300.png";
+        $fullPath = public_path($localPath);
+
+        if (!file_exists($fullPath)) {
+            $url = "https://static.arasaac.org/pictograms/{$id}/{$id}_300.png";
+            $imageContent = file_get_contents($url);
+            if ($imageContent !== false) {
+                file_put_contents($fullPath, $imageContent);
+            } else {
+                return $url; // Fallback all'URL originale se il download fallisce
+            }
+        }
+
+        return asset($localPath);
     }
 
     public function generaCasuale()
