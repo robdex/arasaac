@@ -1,0 +1,17 @@
+Devo creare un servizio in frontend che permetta di tradurre un testo da italiano a CCA e viceversa.
+
+La CCA è la Comunicazione Aumentativa Alternativa. Prevede la sostituzione delle parole con semplici disegni o simboli, per permettere a chi ha problemi di comunicazione di poter esprimere se stessi. Puoi avere più info in questo link: https://arasaac.org/aac/it
+
+Voglio creare un form dove metti una frase in italiano in una textarea e ti restituisce una serie di immagini allineate a fianco che la traducono in CCA.
+Deve esserci anche un tasto per generare delle frasi casuali e tradurle direttamente.
+
+Per trovare le immaginidevo interrogare le API del sito https://arasaac.org. Ci sono le API pubbliche tra cui, per le varie parole si può trovare l'insieme di immagini più attinenti alla frase.
+
+Ad esempio esiste la API https://api.arasaac.org/v1/pictograms/it/search/mare che restituisce un insieme di immagini relative alla parola mare:
+
+    curl -X GET "https://api.arasaac.org/v1/pictograms/it/search/mare" -H "accept: application/json"
+
+il form sarà in homepage e avrà un input e un tasto "Genera CAA". Sotto viene caricato un div che conterrà le immagini generate una dopo l'altra.
+
+A partire dall'id di ogni parola può essere recuperato il path dell'immagine all'indirizzo: https://static.arasaac.org/pictograms/{id}/{id}_300.png che recupera l'immagine a 300px di risoluzione.
+

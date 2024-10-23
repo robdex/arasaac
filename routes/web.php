@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TraduzioneController;
 
 Route::view('/', 'welcome');
 
@@ -11,5 +12,9 @@ Route::view('dashboard', 'dashboard')
 Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
+
+Route::get('/', [TraduzioneController::class, 'index']);
+Route::post('/traduci', [TraduzioneController::class, 'traduci']);
+Route::get('/genera-casuale', [TraduzioneController::class, 'generaCasuale']);
 
 require __DIR__.'/auth.php';
