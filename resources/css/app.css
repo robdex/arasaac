@@ -62,8 +62,21 @@ button:hover {
     justify-content: center;
 }
 
-#risultatoTraduzione img {
+.parola-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin: 10px;
+}
+
+.parola-testo {
+    font-size: 1rem;
+    color: #4a86e8;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+#risultatoTraduzione img {
     border: 3px solid #4a86e8;
     border-radius: 10px;
     transition: transform 0.3s;

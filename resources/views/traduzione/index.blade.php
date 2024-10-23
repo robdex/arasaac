@@ -50,12 +50,22 @@
             
             risultatoTraduzione.innerHTML = '';
             risultati.forEach(risultato => {
+                const divParola = document.createElement('div');
+                divParola.className = 'parola-container';
+
+                const span = document.createElement('span');
+                span.textContent = risultato.parola;
+                span.className = 'parola-testo';
+                divParola.appendChild(span);
+
                 const img = document.createElement('img');
                 img.src = risultato.immagine;
                 img.alt = risultato.parola;
                 img.title = risultato.parola;
                 img.width = 100;
-                risultatoTraduzione.appendChild(img);
+                divParola.appendChild(img);
+
+                risultatoTraduzione.appendChild(divParola);
             });
         }
     });
