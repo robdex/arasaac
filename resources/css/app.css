@@ -41,18 +41,16 @@ textarea {
 }
 
 button {
-    background-color: #4a86e8;
-    color: white;
-    border: none;
     padding: 10px 20px;
     font-size: 1rem;
     border-radius: 20px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.1s;
+    border: none;
 }
 
 button:hover {
-    background-color: #3a76d8;
+    transform: scale(1.05);
 }
 
 #risultatoTraduzione {
@@ -111,4 +109,29 @@ button:hover {
     padding: 5px;
     border-radius: 5px;
     text-align: center;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.btn-primary {
+    background-color: #4a86e8;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #3a76d8;
+}
+
+.btn-secondary {
+    background-color: #a0c4ff;
+    color: #2c5282; /* Colore del testo modificato */
+}
+
+.btn-secondary:hover {
+    background-color: #8ab4ff;
+    color: #1a365d; /* Colore del testo al passaggio del mouse */
 }

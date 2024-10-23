@@ -9,8 +9,8 @@
             <textarea id="testoInput" rows="3" required></textarea>
         </div>
         <div class="button-group">
-            <button type="submit">Trasforma in Immagini!</button>
-            <button type="button" id="generaCasuale">Frase a Sorpresa</button>
+            <button type="button" id="generaCasuale" class="btn-secondary">Frase a Sorpresa</button>
+            <button type="submit" class="btn-primary">Trasforma in Immagini!</button>
         </div>
     </form>
 </div>
@@ -34,6 +34,14 @@
             const data = await response.json();
             testoInput.value = data.frase;
             await traduci(data.frase);
+        });
+
+        // Aggiunta dell'evento keydown per CTRL+Invio
+        testoInput.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'Enter') {
+                e.preventDefault();
+                formTraduzione.dispatchEvent(new Event('submit'));
+            }
         });
 
         async function traduci(testo) {
