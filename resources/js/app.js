@@ -101,10 +101,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 img.alt = risultato.parola;
                 img.title = risultato.parola;
                 img.width = 100;
+                img.addEventListener('click', () => apriModale(risultato.immagine, risultato.parola));
                 divParola.appendChild(img);
             }
 
             risultatoTraduzione.appendChild(divParola);
+        });
+    }
+
+    function apriModale(src, alt) {
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <img src="${src}" alt="${alt}" width="300">
+                <p>${alt}</p>
+            </div>
+        `;
+        document.body.appendChild(modal);
+
+        modal.addEventListener('click', () => {
+            document.body.removeChild(modal);
         });
     }
 });

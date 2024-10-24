@@ -6,6 +6,7 @@ body {
     font-family: 'Nunito', sans-serif;
     background-color: #f0f8ff;
     color: #333;
+    text-transform: uppercase;
 }
 
 .container {
@@ -146,6 +147,9 @@ button:hover {
     font-size: 18px;
     width: 100%;
     padding-right: 40px;
+    text-transform: none;
+    display: block;
+    margin: 0 auto;
 }
 
 .clear-button {
@@ -190,4 +194,49 @@ header h1 a {
 
 header h1 a:hover {
     text-decoration: underline;
+}
+
+.parola-container img {
+    cursor: pointer;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    border: 5px solid #4a86e8; /* Aggiunge un bordo azzurro */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Aggiunge un'ombra per far risaltare il bordo */
+}
+
+.modal-content img {
+    max-width: 100%;
+    height: auto;
+}
+
+.modal-content p {
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 24px; /* Aumenta la dimensione del testo */
+    text-transform: uppercase; /* Rende il testo tutto maiuscolo */
+}
+
+.form-group label {
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
