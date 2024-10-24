@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<h1>Traduttore Magico: Italiano - CAA</h1>
 <div class="form-container">
     <form id="formTraduzione">
         <div class="form-group">

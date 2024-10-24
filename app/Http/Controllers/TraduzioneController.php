@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
 use Symfony\Component\Process\Process;
 
 class TraduzioneController extends Controller
@@ -100,5 +99,11 @@ print(doc[0].lemma_)
         $fraseCasuale = $frasi[array_rand($frasi)];
 
         return response()->json(['frase' => $fraseCasuale]);
+    }
+
+    public function clearResults()
+    {
+        $risultatoTraduzione = '';
+        return response()->json(['success' => true]);
     }
 }

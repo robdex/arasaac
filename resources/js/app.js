@@ -27,7 +27,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     clearButton.addEventListener('click', function() {
         testoInput.value = '';
+        risultatoTraduzione.innerHTML = '';
         testoInput.focus();
+        
+        // Chiamata AJAX per cancellare i risultati sul server
+        fetch('/clear-results', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+        });
     });
 
     // Aggiungi icone agli altri pulsanti

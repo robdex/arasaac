@@ -16,5 +16,6 @@ Route::view('profile', 'profile')
 Route::get('/', [TraduzioneController::class, 'index']);
 Route::post('/traduci', [TraduzioneController::class, 'traduci']);
 Route::get('/genera-casuale', [TraduzioneController::class, 'generaCasuale']);
+Route::post('/clear-results', [TraduzioneController::class, 'clearResults']);
 
 require __DIR__.'/auth.php';
