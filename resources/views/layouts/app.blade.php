@@ -11,7 +11,7 @@
     </head>
     <body>
         <header>
-            <h1><a href="{{ url('/') }}">Traduttore Magico: Italiano - CAA</a></h1>
+            <h1><a href="{{ url('/') }}">Traduttore Italiano - CAA</a></h1>
         </header>
         <div class="container">
             @yield('content')

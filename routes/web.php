@@ -17,5 +17,6 @@ Route::get('/', [TraduzioneController::class, 'index']);
 Route::post('/traduci', [TraduzioneController::class, 'traduci']);
 Route::get('/genera-casuale', [TraduzioneController::class, 'generaCasuale']);
 Route::post('/clear-results', [TraduzioneController::class, 'clearResults']);
+Route::post('/set-image-size', [TraduzioneController::class, 'setImageSize']);
 
 require __DIR__.'/auth.php';

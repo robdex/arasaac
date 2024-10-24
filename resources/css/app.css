@@ -5,12 +5,15 @@
 body {
     font-family: 'Nunito', sans-serif;
     background-color: #f0f8ff;
-    color: #333;
-    text-transform: uppercase;
+    color: #2c5282; /* Blu scuro per il testo principale */
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #4a86e8; /* Blu più chiaro per i titoli */
 }
 
 .container {
-    max-width: 800px;
+    width: 100%;
     margin: 0 auto;
     padding: 20px;
 }
@@ -23,7 +26,8 @@ h1 {
 }
 
 .form-group {
-    margin-bottom: 20px;
+    position: relative;
+    margin-top: 30px;
 }
 
 label {
@@ -43,7 +47,7 @@ textarea {
 
 button {
     padding: 10px 20px;
-    font-size: 1rem;
+    font-size: 16px; /* Aumentato la dimensione del font */
     border-radius: 20px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.1s;
@@ -55,25 +59,25 @@ button:hover {
 }
 
 #risultatoTraduzione {
-    margin-top: 30px;
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    padding: 20px 0;
 }
 
 .parola-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 10px;
+    margin: 5px;
+    text-align: center;
 }
 
 .parola-testo {
-    font-size: 1.2rem; /* Aumentato da 1rem a 1.2rem */
-    color: #4a86e8;
-    margin-bottom: 5px;
-    text-align: center;
-    font-weight: bold; /* Aggiunto per maggiore enfasi */
+    display: block;
+    margin-top: 5px;
+    font-size: 16px; /* Aumentato la dimensione del font */
+    color: #4a86e8; /* Blu per il testo delle parole */
+    text-transform: uppercase;
+    font-weight: bold; /* Aggiunto per rendere il testo in grassetto */
 }
 
 #risultatoTraduzione img {
@@ -139,14 +143,16 @@ button:hover {
 }
 
 .form-container {
-    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 #testoInput {
-    height: 200px;
-    font-size: 18px;
     width: 100%;
-    padding-right: 40px;
+    max-width: 800px;
+    font-size: 20px;  /* Aumentato da 18px (o qualsiasi valore precedente) */
+    height: 150px;
+    padding: 10px;
     text-transform: none;
     display: block;
     margin: 0 auto;
@@ -156,19 +162,17 @@ button:hover {
     position: absolute;
     top: 10px;
     right: 10px;
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 5px 10px;
-    font-size: 16px;
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    color: #4a86e8;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 5px;
+    z-index: 10;
 }
 
 .clear-button:hover {
-    background-color: #e0e0e0;
+    color: #3a76d8;
 }
 
 .clear-button:focus {
@@ -206,11 +210,18 @@ header h1 a:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    opacity: 0;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.modal.show {
+    background-color: rgba(0, 0, 0, 0.7);
+    opacity: 1;
 }
 
 .modal-content {
@@ -218,8 +229,16 @@ header h1 a:hover {
     padding: 20px;
     border-radius: 5px;
     text-align: center;
-    border: 5px solid #4a86e8; /* Aggiunge un bordo azzurro */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Aggiunge un'ombra per far risaltare il bordo */
+    border: 5px solid #4a86e8;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    transform: scale(0.7);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.modal.show .modal-content {
+    transform: scale(1);
+    opacity: 1;
 }
 
 .modal-content img {
@@ -230,8 +249,7 @@ header h1 a:hover {
 .modal-content p {
     margin-top: 10px;
     font-weight: bold;
-    font-size: 24px; /* Aumenta la dimensione del testo */
-    text-transform: uppercase; /* Rende il testo tutto maiuscolo */
+    font-size: 24px;
 }
 
 .form-group label {
@@ -239,4 +257,118 @@ header h1 a:hover {
     text-align: center;
     font-weight: bold;
     margin-bottom: 10px;
+}
+
+.header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header-row h2 {
+    margin: 0;
+    font-size: 24px; /* Aumentato la dimensione del titolo */
+}
+
+.switcher {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+/* Miglioramento dello switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 120px;  /* Aumentato da 100px */
+    height: 50px;  /* Aumentato da 40px */
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #4a86e8;
+    transition: .4s;
+    border-radius: 50px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 42px;  /* Aumentato da 32px */
+    width: 42px;  /* Aumentato da 32px */
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider:before {
+    transform: translateX(70px);  /* Aumentato da 60px */
+}
+
+.slider:after {
+    content: '300px';
+    position: absolute;
+    right: 10px;  /* Cambiato da left a right */
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    font-size: 16px;  /* Aumentato da 14px */
+    font-weight: bold;
+}
+
+input:checked + .slider:after {
+    content: '500px';
+    right: auto;
+    left: 10px;  /* Cambiato da right a left */
+}
+
+.thumbnail {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.thumbnail:hover {
+    transform: scale(1.1);
+}
+
+body, button, input, select, textarea {
+    font-size: 16px;
+}
+
+/* Nascondi completamente il checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+}
+
+/* Aumenta ulteriormente la dimensione del font per i pulsanti */
+button {
+    font-size: 20px; /* Aumentato da 18px */
+    padding: 14px 22px; /* Aumentato leggermente il padding per pulsanti più grandi */
+}
+
+/* Aumenta leggermente la dimensione del font per lo switcher */
+.slider:after {
+    font-size: 18px; /* Aumentato da 16px */
+}
+
+.loading-message {
+    font-size: 20px;
+    color: #4a86e8;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: center;
 }

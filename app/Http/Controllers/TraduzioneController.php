@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\Process\Process;
 
 class TraduzioneController extends Controller
@@ -15,9 +16,10 @@ class TraduzioneController extends Controller
         $this->pythonPath = base_path('python_env/bin/python');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return view('traduzione.index');
+        $imageSize = $request->session()->get('image_size', 300);
+        return view('traduzione.index', compact('imageSize'));
     }
 
     public function traduci(Request $request)
@@ -25,6 +27,7 @@ class TraduzioneController extends Controller
         $testo = $request->input('testo');
         $parole = explode(' ', $testo);
         $risultati = [];
+        $imageSize = $request->session()->get('image_size', 300);
 
         foreach ($parole as $parola) {
             $risultato = $this->cercaParola($parola);
@@ -35,15 +38,17 @@ class TraduzioneController extends Controller
                 }
             }
             if (!empty($risultato)) {
-                $immagineUrl = $this->getImmagineUrl($risultato[0]['_id']);
+                $immagineUrl = $this->getImmagineUrl($risultato[0]['_id'], $imageSize);
                 $risultati[] = [
                     'parola' => $parola,
-                    'immagine' => $immagineUrl
+                    'immagine' => $immagineUrl,
+                    'size' => $imageSize
                 ];
             } else {
                 $risultati[] = [
                     'parola' => $parola,
-                    'immagine' => null
+                    'immagine' => null,
+                    'size' => $imageSize
                 ];
             }
         }
@@ -75,13 +80,13 @@ print(doc[0].lemma_)
         return trim($process->getOutput());
     }
 
-    protected function getImmagineUrl($id)
+    protected function getImmagineUrl($id, $size)
     {
-        $localPath = "images/arasaac/{$id}_300.png";
+        $localPath = "images/arasaac/{$id}_{$size}.png";
         $fullPath = public_path($localPath);
 
         if (!file_exists($fullPath)) {
-            $url = "https://static.arasaac.org/pictograms/{$id}/{$id}_300.png";
+            $url = "https://static.arasaac.org/pictograms/{$id}/{$id}_{$size}.png";
             $imageContent = file_get_contents($url);
             if ($imageContent !== false) {
                 file_put_contents($fullPath, $imageContent);
@@ -105,5 +110,21 @@ print(doc[0].lemma_)
     {
         $risultatoTraduzione = '';
         return response()->json(['success' => true]);
+    }
+
+    public function setImageSize(Request $request)
+    {
+        $size = $request->input('size');
+        if (in_array($size, [300, 500])) {
+            $request->session()->put('image_size', $size);
+            
+            // Se c'è un testo fornito, ritraduce immediatamente
+            if ($request->has('testo')) {
+                return $this->traduci($request);
+            }
+            
+            return response()->json(['success' => true]);
+        }
+        return response()->json(['success' => false], 400);
     }
 }

@@ -56,7 +56,7 @@ return [
     "La colla incolla i pezzi",
     "Il nastro adesivo sigilla la scatola",
     "La graffetta tiene insieme i fogli",
-    "La spillatrice fissa i documenti",
+    "La pinzatrice fissa i documenti",
     "L'evidenziatore sottolinea le parole importanti",
     "La calcolatrice fa i conti",
     "Il calendario segna i giorni",

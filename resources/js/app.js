@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const testoInput = document.getElementById('testoInput');
     const risultatoTraduzione = document.getElementById('risultatoTraduzione');
     const generaCasuale = document.getElementById('generaCasuale');
+    const imageSizeToggle = document.getElementById('imageSizeToggle');
 
     // Aggiungi Font Awesome
     const fontAwesome = document.createElement('link');
@@ -19,10 +20,8 @@ document.addEventListener('DOMContentLoaded', function() {
     clearButton.type = 'button';
     clearButton.setAttribute('aria-label', 'Cancella testo');
     
-    const formContainer = document.createElement('div');
-    formContainer.className = 'form-container';
-    testoInput.parentNode.insertBefore(formContainer, testoInput);
-    formContainer.appendChild(testoInput);
+    const formContainer = document.querySelector('.form-group');
+    formContainer.style.position = 'relative';
     formContainer.appendChild(clearButton);
 
     clearButton.addEventListener('click', function() {
@@ -73,8 +72,30 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    if (imageSizeToggle) {
+        imageSizeToggle.addEventListener('change', function() {
+            const size = this.checked ? 500 : 300;
+            const testo = testoInput.value;
+            
+            fetch('/set-image-size', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({ size: size, testo: testo })
+            }).then(response => response.json())
+              .then(data => {
+                if (data.length > 0) {
+                    // Se abbiamo ricevuto risultati, aggiorniamo le immagini
+                    updateResults(data);
+                }
+            });
+        });
+    }
+
     async function traduci(testo) {
-        risultatoTraduzione.innerHTML = '<p>Sto preparando le immagini magiche...</p>';
+        risultatoTraduzione.innerHTML = '<p class="loading-message">STO PREPARANDO LE IMMAGINI MAGICHE...</p>';
         const response = await fetch('/traduci', {
             method: 'POST',
             headers: {
@@ -84,44 +105,59 @@ document.addEventListener('DOMContentLoaded', function() {
             body: JSON.stringify({ testo: testo })
         });
         const risultati = await response.json();
-        
+        updateResults(risultati);
+    }
+
+    function updateResults(risultati) {
+        const risultatoTraduzione = document.getElementById('risultatoTraduzione');
         risultatoTraduzione.innerHTML = '';
         risultati.forEach(risultato => {
             const divParola = document.createElement('div');
             divParola.className = 'parola-container';
-
-            const span = document.createElement('span');
-            span.textContent = risultato.parola;
-            span.className = 'parola-testo';
-            divParola.appendChild(span);
 
             if (risultato.immagine) {
                 const img = document.createElement('img');
                 img.src = risultato.immagine;
                 img.alt = risultato.parola;
                 img.title = risultato.parola;
-                img.width = 100;
-                img.addEventListener('click', () => apriModale(risultato.immagine, risultato.parola));
+                img.className = 'thumbnail';
+                // Imposta le dimensioni corrette in base alla size
+                img.style.width = risultato.size == 300 ? '150px' : '250px';
+                img.style.height = risultato.size == 300 ? '150px' : '250px';
+                img.style.objectFit = 'cover';
+                img.addEventListener('click', () => apriModale(risultato.immagine, risultato.parola, risultato.size));
                 divParola.appendChild(img);
             }
+
+            const span = document.createElement('span');
+            span.textContent = risultato.parola;
+            span.className = 'parola-testo';
+            divParola.appendChild(span);
 
             risultatoTraduzione.appendChild(divParola);
         });
     }
 
-    function apriModale(src, alt) {
+    function apriModale(src, alt, size) {
         const modal = document.createElement('div');
         modal.className = 'modal';
         modal.innerHTML = `
             <div class="modal-content">
-                <img src="${src}" alt="${alt}" width="300">
-                <p>${alt}</p>
+                <img src="${src}" alt="${alt}" style="width:${size}px;height:${size}px;object-fit:contain;">
+                <p>${alt.toUpperCase()}</p>
             </div>
         `;
         document.body.appendChild(modal);
 
+        // Forza un reflow prima di aggiungere la classe 'show'
+        modal.offsetWidth;
+        modal.classList.add('show');
+
         modal.addEventListener('click', () => {
-            document.body.removeChild(modal);
+            modal.classList.remove('show');
+            setTimeout(() => {
+                document.body.removeChild(modal);
+            }, 300); // Aspetta che la transizione finisca prima di rimuovere l'elemento
         });
     }
 });
